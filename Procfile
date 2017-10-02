@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/facestein
+web: target/universal/stage/bin/facestein -Dhttp.port=${PORT}
