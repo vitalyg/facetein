@@ -1,0 +1,9 @@
+@(side: String)
+
+@main("Welcome to Play") {
+  <h1>Welcome to Play!</h1>
+  <span>you chose @side</span>
+  <br />
+  <img src="@routes.Assets.versioned("images/vitaly.jpg")" width="200" height="200" onclick="/results/left"/>
+  <img src="@routes.Assets.versioned("images/vitaly.jpg")" width="200" height="200" onclick="/results/right" />
+}

@@ -1,0 +1,30 @@
+.container{
+        width: 200px;
+        margin-right: 50px;
+        float: left;
+    }
+.top-image{
+        width: 100px;
+        height:100px;
+        float: left;
+    }
+img{
+        width: 200px;
+        height:200px;
+        float: left;
+    }
+.text{
+        text-align:center;
+    }
+#sidebar {
+    float:right;
+    width:175px;
+    background:#00A1E0;
+    margin-right: 200px;
+}
+.general{
+    float:left;
+}
+.specific{
+    color:#f00;
+}

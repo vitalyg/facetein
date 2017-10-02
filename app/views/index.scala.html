@@ -1,0 +1,119 @@
+@()
+
+@main("Welcome to Play") {
+  <script type="text/javascript" src="@routes.Assets.versioned("/javascripts/jquery-3.2.1.min.js")"></script>
+  <script>
+    var dim;
+    var left;
+    var leftRating;
+    var right;
+    var rightRating;
+
+    function getMatch() {
+        $.get("/match", function(data, status){
+            left = data.left;
+            leftRating = parseInt(data.leftRating);
+            right = data.right;
+            rightRating = parseInt(data.rightRating);
+            dim = data.dim;
+            $("#caption").text(dim);
+            $("#left-image").attr("src", "/assets/images/data-science/" + left + ".jpg");
+            $("#left-label").text("← " + left);
+            $("#right-image").attr("src", "/assets/images/data-science/" + right + ".jpg");
+            $("#right-label").text(right + " →");
+
+            getHighScores(dim);
+        });
+    };
+    $(document).ready(function() {
+        getMatch();
+        getHighScores();
+    });
+    function postWinner(winner) {
+        $.ajax({
+            type: 'POST',
+            url: '/winner',
+            data: JSON.stringify({dim: dim, left: left, leftRating: leftRating, right: right, rightRating: rightRating, winner: winner}),
+            success: function(data) { getMatch(); getHighScores(); },
+            contentType: "application/json",
+            dataType: 'json'
+        });
+    }
+    function addBorder(image) {
+        $(image).css('border', "solid 5px #00A1E0");
+        $(image).css('width', 190);
+        $(image).css('height', 190);
+    };
+    function removeBorder(image) {
+        $(image).css('border', 0);
+        $(image).css('width', 200);
+        $(image).css('height', 200);
+    };
+    $(document).keydown(function(e) {
+        switch (e.which) {
+            case 37:
+                addBorder("#left-image");
+                break;
+            case 39:
+                addBorder("#right-image");
+                break;
+        }
+    });
+    $(document).keyup(function(e) {
+        switch (e.which) {
+            case 37:
+                removeBorder("#left-image");
+                postWinner(left);
+                break;
+            case 39:
+                removeBorder("#right-image");
+                postWinner(right);
+                break;
+        }
+    });
+    function getHighScores(dim) {
+        $.get("/highScores/ds/" + dim, function(data, status) {
+            for (i = 0; i < data.length; i++) {
+                $("#top-image" + (i + 1)).attr("src", "/assets/images/data-science/" + data[i].name + ".jpg");
+                $("#top-label" + (i + 1)).text(data[i].score);
+            }
+        });
+    };
+  </script>
+
+  <h1>
+    <div class="general">Who is better at&nbsp;</div>
+    <div class="specific" id="caption"></div>
+  </h1>
+  <div class="container">
+    <div class="img"><img src="" id="left-image" /></div>
+    <div class="text" id="left-label"></div>
+  </div>
+  <div class="container">
+    <div class="img"><img src="" id="right-image" /></div>
+    <div class="text" id="right-label"></div>
+  </div>
+  <div id="sidebar">
+    <h2>Top Scores</h2>
+    <div class="container">
+        <img src="" class="top-image" id="top-image1" />
+        <div class="text" id="top-label1"></div>
+    </div>
+    <div class="container">
+        <img src="" class="top-image" id="top-image2" />
+        <div class="text" id="top-label2"></div>
+    </div>
+    <div class="container">
+        <img src="" class="top-image" id="top-image3" />
+        <div class="text" id="top-label3"></div>
+    </div>
+    <div class="container">
+        <img src="" class="top-image" id="top-image4" />
+        <div class="text" id="top-label4"></div>
+    </div>
+    <div class="container">
+        <img src="" class="top-image" id="top-image5" />
+        <div class="text" id="top-label5"></div>
+    </div>
+  </div>
+}
