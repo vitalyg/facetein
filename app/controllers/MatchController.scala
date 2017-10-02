@@ -14,7 +14,7 @@ object MatchController {
     .filter(_.getName.endsWith("jpg"))
     .map(_.getName.split('.').head)
 
-  val dsDims: List[String] = List("machine learning", "coding", "business acumen", "getting things done", "being a great teammate")
+  val dsDims: List[String] = List("machine learning", "coding", "data acumen", "business acumen", "getting things done", "communicating")
 }
 
 /**
