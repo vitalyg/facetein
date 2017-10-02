@@ -1,9 +1,10 @@
 package models
 import scalikejdbc._
+import scalikejdbc.config.DBs
 
 object Database {
   Class.forName("org.postgresql.Driver")
-  ConnectionPool.singleton("jdbc:postgresql://localhost:5432/vgordon", "postgres", "123456")
+  DBs.setupAll
   implicit val session = AutoSession
 }
 

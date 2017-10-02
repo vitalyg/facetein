@@ -10,8 +10,14 @@ scalaVersion := "2.12.3"
 libraryDependencies += guice
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
 
+lazy val scalikejdbcVersion = "3.1.0"
+lazy val scalikejdbcPlayVersion = "2.6.+"
+
 libraryDependencies ++= Seq(
-  "org.scalikejdbc" %% "scalikejdbc"       % "3.1.0",
+  "org.scalikejdbc"      %% "scalikejdbc"                   % scalikejdbcVersion,
+  "org.scalikejdbc"      %% "scalikejdbc-config"            % scalikejdbcVersion,
+  "org.scalikejdbc"      %% "scalikejdbc-play-initializer"  % scalikejdbcPlayVersion,
+  "org.scalikejdbc"      %% "scalikejdbc-play-fixture"      % scalikejdbcPlayVersion,
   "com.h2database"  %  "h2"                % "1.4.196",
   "ch.qos.logback"  %  "logback-classic"   % "1.2.3",
   "org.postgresql"  %  "postgresql"        % "42.1.4"

@@ -37,7 +37,6 @@ object WinnerController {
  */
 @Singleton
 class WinnerController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
-  import play.api.libs.json.Json
   import WinnerController._
   import models.Database._
 
