@@ -25,20 +25,21 @@
             getHighScores(dim);
         });
     };
-    $(document).ready(function() {
+    function refresh() {
         getMatch();
         getHighScores();
-    });
+    };
+    $(document).ready(function() { refresh(); });
     function postWinner(winner) {
         $.ajax({
             type: 'POST',
             url: '/winner',
             data: JSON.stringify({dim: dim, left: left, leftRating: leftRating, right: right, rightRating: rightRating, winner: winner}),
-            success: function(data) { getMatch(); getHighScores(); },
+            success: function(data) { refresh(); },
             contentType: "application/json",
             dataType: 'json'
         });
-    }
+    };
     function addBorder(image) {
         $(image).css('border', "solid 5px #00A1E0");
         $(image).css('width', 190);
@@ -56,6 +57,9 @@
                 break;
             case 39:
                 addBorder("#right-image");
+                break;
+            case 40:
+                refresh();
                 break;
         }
     });
