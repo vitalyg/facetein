@@ -13,18 +13,14 @@ object WinnerController {
   import models.Database._
 
   def getTop10(team: String, dim: String): Seq[Score] = {
-    val r = Rating.syntax("rating")
-    val topRatings = withSQL {
-      select.from(Rating as r).where.eq(r.dimension, dim).and.eq(r.team, team).orderBy(r.rating).desc.limit(10)
-    }.map(res => Score(res.string(4), res.int(5))).list().apply()
-    topRatings
+    sql"select name, rating from ratings where dimension = $dim and team = $team order by rating desc, name"
+      .map(res => Score(res.string(1), res.int(2)))
+      .list()
+      .apply()
   }
 
   def getRating(team: String, dimension: String, name: String): Option[Rating] = {
-    val r = Rating.syntax("rating")
-    withSQL {
-      select.from(Rating as r).where.eq(r.name, name).and.eq(r.dimension, dimension).and.eq(r.team, team)
-    }.map(Rating(_)).single().apply()
+    sql"select * from ratings where name = $name and dimension = $dimension and team = $team".map(Rating(_)).single().apply()
   }
 
   implicit val scoreWrites: Writes[Score] = new Writes[Score] {
